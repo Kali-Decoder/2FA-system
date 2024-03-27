@@ -1,0 +1,31 @@
+{
+  "name": "2fa-system",
+  "version": "1.0.0",
+  "description": "Making 2FA system using OTP ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon index.js"
+  },
+  "keywords": [
+    "2FA",
+    "OTP"
+  ],
+  "author": "Neeraj Choubisa",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.3.6",
+    "nodemailer": "^6.7.5",
+    "supervisor": "^0.12.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.0",
+    "nodemon": "^3.1.0"
+  }
+}
