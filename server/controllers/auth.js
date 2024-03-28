@@ -117,14 +117,13 @@ exports.login = async (req, res, next) => {
 
       await otp.remove();
 
-      return res.json({
+      return res.status(200).send({
         otp: otp.otp,
-        success: false,
-        otpStatus: user.two_fa_status,
         id: user._id,
+        success: false,
+        message: "Please enter the OTP sent to your email",
       });
     }
-
     sendToken(user, 200, res);
   } catch (error) {
     next(error);
@@ -214,7 +213,11 @@ exports.verifyOTP = async (req, res, next) => {
 
     user.OTP_code = null;
     await user.save();
-    return sendToken(user, 200, res);
+    return res.status(200).send({
+        success: true,
+        message: `OTP Verified Successfully`,
+        
+    });
   } catch (error) {
     return next(new ErrorResponse("Internal Server", 500));
   }
@@ -222,5 +225,5 @@ exports.verifyOTP = async (req, res, next) => {
 
 const sendToken = (user, statusCode, res) => {
   const token = user.getSignedToken();
-  res.status(statusCode).json({ success: true, data: user.username, token });
+  return res.status(statusCode).json({ success: true, data: user.username, token });
 };

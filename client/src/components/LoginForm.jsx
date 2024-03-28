@@ -1,12 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-    Card,
-    Input,
-    Checkbox,
-    Button,
-    Typography,
-  } from "@material-tailwind/react";
+  Card,
+  Input,
+  Checkbox,
+  Button,
+  Typography,
+} from "@material-tailwind/react";
+import { Link } from "react-router-dom";
+import { loginUser } from "../utils/auth.api";
+import { toast } from "react-hot-toast";
 const LoginForm = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.email || !formData.password) {
+      return toast.error("Please fill all the fields");
+    }
+
+    let id = toast.loading("Logging in...");
+    let response = await loginUser(formData);
+    if (response.message) {
+      toast.success(response.message, { id });
+      window.location.href = `/verify-otp/${response.id}`;
+    }
+  };
   return (
     <>
       <Card
@@ -28,6 +55,8 @@ const LoginForm = () => {
             <Input
               size="lg"
               placeholder="name@mail.com"
+              name="email"
+              onChange={(e) => handleChange(e)}
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
@@ -40,6 +69,8 @@ const LoginForm = () => {
               type="password"
               size="lg"
               placeholder="********"
+              name="password"
+              onChange={(e) => handleChange(e)}
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
@@ -47,14 +78,14 @@ const LoginForm = () => {
             />
           </div>
 
-          <Button className="mt-6" fullWidth>
+          <Button className="mt-6" fullWidth onClick={(e) => handleSubmit(e)}>
             sign in
           </Button>
           <Typography color="gray" className="mt-4 text-center font-normal">
             Not have an account?{" "}
-            <a href="#" className="font-medium text-gray-900">
+            <Link to="/register" className="font-medium text-gray-900">
               Sign Up
-            </a>
+            </Link>
           </Typography>
         </form>
       </Card>

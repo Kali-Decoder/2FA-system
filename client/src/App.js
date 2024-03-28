@@ -17,7 +17,7 @@ function App() {
       <Route path="/login" element={<Login/>}/>
       <Route path="/activate" element={<Activate2FA/>}/>
       <Route path="/deactivate" element={<Deactivate/>}/>
-      <Route path="/verify-otp" element={<VerifyOTP/>}/>
+      <Route path="/verify-otp/:id" element={<VerifyOTP/>}/>
       <Route path="/auth/:id/verify/:token" element={<IsEmailVarified/>}/>
     
     </Routes>

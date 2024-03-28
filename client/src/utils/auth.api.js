@@ -40,9 +40,9 @@ export const verifyEmail = async ({token,id}) => {
     return error.response.data;
   }
 };
-export const verifyOTP = async (data) => {
+export const verifyOTP = async ({otp,id}) => {
   try {
-    const response = await api.post("/verify-otp", data);
+    const response = await api.post(`/verify2FA/${id}`, {otp});
     return response.data;
   } catch (error) {
     return error.response.data;

@@ -1,6 +1,39 @@
-import React from "react";
+import React,{useState} from "react";
 import { Button } from "@material-tailwind/react";
+import { toast } from "react-hot-toast";
+import { verifyOTP } from "../utils/auth.api";
+import { useParams } from "react-router-dom";
 const VerifyOTP = () => {
+    const params = useParams();
+    const [formData, setFormData] = useState({
+        otp1: "",
+        otp2: "",
+        otp3: "",
+        otp4: "",
+        otp5: "",
+        otp6: "",
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let otp = formData.otp1 + formData.otp2 + formData.otp3 + formData.otp4 + formData.otp5 + formData.otp6;
+        let id = toast.loading("Verifying OTP...");
+        let response = await verifyOTP({ otp , id : params.id });
+        if (response.message) {
+            toast.success(response.message, { id });
+            window.location.href = "/";
+        }
+
+    }
+
+
   return (
     <>
       <div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
@@ -23,7 +56,8 @@ const VerifyOTP = () => {
                       <input
                         class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
                         type="text"
-                        name=""
+                        name="otp1"
+                        onChange={(e)=>handleChange(e)}
                         id=""
                       />
                     </div>
@@ -31,7 +65,8 @@ const VerifyOTP = () => {
                       <input
                         class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
                         type="text"
-                        name=""
+                        name="otp2"
+                        onChange={(e)=>handleChange(e)}
                         id=""
                       />
                     </div>
@@ -39,7 +74,8 @@ const VerifyOTP = () => {
                       <input
                         class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
                         type="text"
-                        name=""
+                        name="otp3"
+                        onChange={(e)=>handleChange(e)}
                         id=""
                       />
                     </div>
@@ -47,7 +83,8 @@ const VerifyOTP = () => {
                       <input
                         class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
                         type="text"
-                        name=""
+                        name="otp4"
+                        onChange={(e)=>handleChange(e)}
                         id=""
                       />
                     </div>
@@ -55,7 +92,8 @@ const VerifyOTP = () => {
                       <input
                         class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
                         type="text"
-                        name=""
+                        name="otp5"
+                        onChange={(e)=>handleChange(e)}
                         id=""
                       />
                     </div>
@@ -63,7 +101,8 @@ const VerifyOTP = () => {
                       <input
                         class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
                         type="text"
-                        name=""
+                        name="otp6"
+                        onChange={(e)=>handleChange(e)}
                         id=""
                       />
                     </div>
@@ -71,7 +110,7 @@ const VerifyOTP = () => {
 
                   <div class="flex flex-col space-y-5">
                     <div>
-                      <Button className="mt-6" fullWidth>
+                      <Button className="mt-6" onClick={(e)=>handleSubmit(e)} fullWidth>
                         Verify Account
                       </Button>
                     </div>
