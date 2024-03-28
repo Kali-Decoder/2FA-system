@@ -7,6 +7,7 @@ import Deactivate from "./pages/Deactivate";
 import VerifyOTP from "./pages/VerifyOTP";
 import { Routes ,Route } from "react-router-dom";
 import Home from "./pages/Home";
+import IsEmailVarified from "./pages/IsEmailVarified";
 function App() {
   return (
    <>
@@ -17,6 +18,8 @@ function App() {
       <Route path="/activate" element={<Activate2FA/>}/>
       <Route path="/deactivate" element={<Deactivate/>}/>
       <Route path="/verify-otp" element={<VerifyOTP/>}/>
+      <Route path="/auth/:id/verify/:token" element={<IsEmailVarified/>}/>
+    
     </Routes>
    
    </>
